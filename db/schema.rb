@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_13_223345) do
+ActiveRecord::Schema.define(version: 2019_09_14_005453) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "albums", force: :cascade do |t|
+    t.string "name"
+    t.string "image"
+    t.string "spotify_url"
+    t.integer "total_tracks"
+    t.string "spotify_id"
+    t.bigint "artist_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["artist_id"], name: "index_albums_on_artist_id"
+  end
 
   create_table "artists", force: :cascade do |t|
     t.string "name"
@@ -40,6 +52,24 @@ ActiveRecord::Schema.define(version: 2019_09_13_223345) do
     t.index ["gender_id"], name: "index_relations_on_gender_id"
   end
 
+  create_table "songs", force: :cascade do |t|
+    t.string "name"
+    t.string "spotify_url"
+    t.string "preview_url"
+    t.integer "duration_ms"
+    t.boolean "explicit"
+    t.string "spotify_id"
+    t.bigint "album_id"
+    t.bigint "gender_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["album_id"], name: "index_songs_on_album_id"
+    t.index ["gender_id"], name: "index_songs_on_gender_id"
+  end
+
+  add_foreign_key "albums", "artists"
   add_foreign_key "relations", "artists"
   add_foreign_key "relations", "genders"
+  add_foreign_key "songs", "albums"
+  add_foreign_key "songs", "genders"
 end
