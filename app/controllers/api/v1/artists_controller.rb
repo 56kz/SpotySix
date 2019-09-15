@@ -13,7 +13,7 @@ class Api::V1::ArtistsController < ApplicationController
         a.genders.each do |g|
           gender_list << g.name
         end
-        new_object = { name: a.name, image: a.image, genres: gender_list, popularity: a.popularity, spotify_url: a.spotify_url, spotify_id: a.spotify_id }
+        new_object = { id: a.id, name: a.name, image: a.image, genres: gender_list, popularity: a.popularity, spotify_url: a.spotify_url, spotify_id: a.spotify_id }
         array << new_object
       end
       answer = { data: array }
