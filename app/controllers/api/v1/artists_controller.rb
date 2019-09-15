@@ -9,7 +9,11 @@ class Api::V1::ArtistsController < ApplicationController
       array = []
       artist_list = Artist.all.order(popularity: :desc)
       artist_list.each do |a|
-        new_object = { name: a.name, image: a.image, genres: a.genders, popularity: a.popularity, spotify_url: a.spotify_url, spotify_id: a.spotify_id }
+        gender_list = []
+        a.genders.each do |g|
+          gender_list << g.name
+        end
+        new_object = { name: a.name, image: a.image, genres: gender_list, popularity: a.popularity, spotify_url: a.spotify_url, spotify_id: a.spotify_id }
         array << new_object
       end
       answer = { data: array }
